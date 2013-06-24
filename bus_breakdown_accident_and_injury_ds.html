@@ -6,8 +6,56 @@
     <script type="text/javascript">
         function draw(data){
             "use strict";
+            var margin  = 50,
+                width = 700,
+                height = 300;
+            // actual width 800 height 400
+            d3.select('body')
+              .append('svg')
+               // .attr('width',width)
+               // .attr('height',height)
+               // // .attr('margin',margin)
+               .attr({'width': width, 'height':height,'margin':margin
+               }) //creates SVG of the size
+              .selectAll('circle')
+              .data(data)
+              .enter()
+              .append('circle'); //creates a <circle></circle> tag for each data row
+            //not visible. cuz no x y coords for circles
+            //top-left corner
+            //need function map data domain to range, i.e. input to output
+            //d3 has scale
+
+            //find max & min
+            var x_extent = d3.extent(data, function(d){return d.collision_with_injury});
+            console.log(x_extent);
+            //build scale
+            var x_scale = d3.scale.linear()
+                .range([margin,width-margin])
+                .domain(x_extent);
+            console.log(x_scale.range());
+
+            var y_extent = d3.extent(data, function(d){
+              return d.dist_between_fail;
+            });
+
+            console.log(y_extent);
+
+            var y_scale = d3.scale.linear()
+              .range([height-margin,margin])
+              .domain(y_extent);
+
+            console.log(y_scale.range());
         }
     </script>
+    <!--
+        comments
+        Challenge of axis: rate is typically less than 10, distance is 3000-5000
+        i.e. large y-x axis difference
+
+
+
+    -->
 </head>
 <body>
     <script type="text/javascript">
