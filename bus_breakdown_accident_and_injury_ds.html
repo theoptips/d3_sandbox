@@ -46,6 +46,12 @@
               .domain(y_extent);
 
             console.log(y_scale.range());
+
+            d3.selectAll('circle')
+              .attr('cx',function(d){return x_scale(d.collision_with_injury)})
+              .attr('cy',function(d){return y_scale(d.dist_between_fail)});
+            d3.selectAll('circle')
+              .attr('r',5);
         }
     </script>
     <!--
